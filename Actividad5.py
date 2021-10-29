@@ -1,11 +1,15 @@
 from random import *
 from turtle import *
 from freegames import path
+import time
 
 car = path('car.gif')
 tiles = list(range(32)) * 2
 state = {'mark': None}
 hide = [True] * 64
+
+#Definición de la variable en 0
+cuadrosDescubiertos = 0
 
 def square(x, y):
     "Draw white square with black outline at (x, y)."
@@ -31,10 +35,16 @@ def tap(x, y):
     "Update mark and hidden tiles based on tap."
     spot = index(x, y)
     mark = state['mark']
-
+    
+    #Definición de variable global de cuadros descubiertos
+    global cuadrosDescubiertos
+    
     if mark is None or mark == spot or tiles[mark] != tiles[spot]:
         state['mark'] = spot
+        
     else:
+        #Se aumentan los 2 cuadros que se descubrieron en el contador
+        cuadrosDescubiertos = cuadrosDescubiertos + 2
         hide[spot] = False
         hide[mark] = False
         state['mark'] = None
@@ -45,13 +55,14 @@ def draw():
     goto(0, 0)
     shape(car)
     stamp()
-
+    
     for count in range(64):
         if hide[count]:
             x, y = xy(count)
             square(x, y)
 
     mark = state['mark']
+    
 
     if mark is not None and hide[mark]:
         x, y = xy(mark)
@@ -59,7 +70,15 @@ def draw():
         goto(x + 10, y + 5)
         color('black')
         write(tiles[mark], font=('Arial', 30, 'normal'))
-
+    #Si los cuadros descubiertos son igual a 64, se detiene el juego y te dice que ganaste
+    if(cuadrosDescubiertos == 64):
+        spot = index(-80, 1)
+        x, y = xy(spot)
+        goto(x,y)
+        write(" ¡Ganaste!",font=('Arial', 30, 'bold'))
+        time.sleep(4)
+        exit()
+        
     update()
     ontimer(draw, 100)
 
