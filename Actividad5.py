@@ -43,9 +43,11 @@ def tap(x, y):
     contador += 1
     print("Llevas un total de: ", contador, " taps")
     
+    
     #Definición de variable global de cuadros descubiertos
     global cuadrosDescubiertos
-    
+    #Paso 4
+    print("Salio el numero: ", tiles[spot])
     if mark is None or mark == spot or tiles[mark] != tiles[spot]:
         state['mark'] = spot
         
