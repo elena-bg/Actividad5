@@ -7,6 +7,8 @@ car = path('car.gif')
 tiles = list(range(32)) * 2
 state = {'mark': None}
 hide = [True] * 64
+#Se declara la variable contador
+contador = 0
 
 #Definición de la variable en 0
 cuadrosDescubiertos = 0
@@ -35,6 +37,11 @@ def tap(x, y):
     "Update mark and hidden tiles based on tap."
     spot = index(x, y)
     mark = state['mark']
+    #Definicion de la variable global
+    global contador 
+    #Se realia la cuenta y se despliega el total de taps
+    contador += 1
+    print("Llevas un total de: ", contador, " taps")
     
     #Definición de variable global de cuadros descubiertos
     global cuadrosDescubiertos
